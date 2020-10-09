@@ -1,6 +1,6 @@
 ---
 title: "Alcohol vs Seat choice"
-author: "Your Name"
+author: "Jennifer Alvarez"
 date: "Fall 2020"
 output: html_document
 ---
@@ -14,8 +14,15 @@ require(tidyverse)
 require(tigerstats)
 davisdata <- read.csv(file="UCDavis.csv")
 ```
+
+<-read.csv(file="GSScsv.csv",header=TRUE)
+
 ## Our Goal is to answer this question Is there a difference between the alcohol consumed between the row
 ## you choose to sit in??
+
+$H_0$ there is no difference an is rejected when uou have a p values less than 0.5.  
+$H_A$: there is a there is a difference between the amount of alcohol consumed per week by row.
+
 
 ## Now with ggplot - first select the basic data
 
@@ -37,8 +44,20 @@ basicCN + geom_boxplot(notch=TRUE,outlier.color = "red") + stat_boxplot(geom ='e
 
 ## Numerical Summarys 
 
+```{r}
+table1 <- xtabs(~alcohol + Seat, data=davisdata)
+rowPerc(table1)
+colPerc(table1)
+```
+
+
 ## Inferential Tests
 
-## Conclusions
+```{r}
+chisqtestGC(table1)
+```
 
+
+## Conclusions
+It appears from the tukey model that the confidence interval shows that there is no difference in the muddle abd front seats but the back is different from both the middle and the front.  
 
